@@ -1,41 +1,48 @@
 'use strict';
 
 const mtg = require('mtgsdk');
-const https = require('https');
+// const https = require('https');
+// const Promise = require('bluebird');
 
-mtg.card.find(3)
-.then( result => {
-  console.log( result.card.name); //Black Lotus
-});
+const getContentProm = require('./lib/get-prom-content');
 
-mtg.card.where({ supertypes: 'legendary', subtypes: 'goblin' })
-.then(cards => {
-    console.log(cards[0]) // "Zada, Hedron Grinder"
-    for(var card in cards) {
-      console.log(cards[card].name);
+// mtg.card.find(3)
+// .then( result => {
+//   console.log( result.card.name); //Black Lotus
+// });
+//
+// mtg.card.where({ supertypes: 'legendary', subtypes: 'goblin' })
+// .then(cards => {
+//     console.log(cards[0]) // "Zada, Hedron Grinder"
+//     for(var card in cards) {
+//       console.log(cards[card]);
+//     };
+// });
+
+const getAllProm = function() {
+  let url = `https://api.magicthegathering.io/v1/cards`;
+  getContentProm(url)
+  .then(cards => {
+    cards = JSON.parse(cards).cards;
+    for (var index in cards) {
+      console.log(cards[index].name);
     };
-});
-
-const getAll = function() {
-  https.get('https://api.magicthegathering.io/v1/cards', (res) => {
-    console.log('statusCode:', res.statusCode);
-    console.log('headers:', res.headers);
-
-    let cards = '';
-    res.on('data', (d) => {
-      cards += d;
-    });
-
-    res.on('end', () => {
-      cards = JSON.parse(cards).cards;
-      for(var card in cards) {
-        console.log(cards[card].name);
-      };
-    })
-
-  }).on('error', (e) => {
-    console.error(e);
-  });
+  })
+  .catch(err => console.error(err.message));
 };
 
-getAll();
+getAllProm();
+
+const generateBoosterProm = function(setCode) {
+  let url = `https://api.magicthegathering.io/v1/sets/${setCode}/booster`
+  getContentProm(url)
+  .then(cards => {
+    cards = JSON.parse(cards).cards;
+    for(var index in cards) {
+      console.log(cards[index].name);
+    };
+  })
+  .catch(err => console.error(err.message));
+};
+
+generateBoosterProm('kld');
