@@ -1,0 +1,24 @@
+{
+  "name": "sandbox-mtg",
+  "version": "1.0.0",
+  "description": "for me to play around with the magicthegathering api for future implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonszc/sandbox-mtg.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/simonszc/sandbox-mtg/issues"
+  },
+  "homepage": "https://github.com/simonszc/sandbox-mtg#readme",
+  "dependencies": {
+    "https": "^1.0.0",
+    "mtgsdk": "^0.1.1"
+  }
+}
